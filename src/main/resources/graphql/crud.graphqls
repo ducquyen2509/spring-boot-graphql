@@ -1,0 +1,36 @@
+interface Node {
+    id : ID!
+}
+scalar Json
+
+type Pagination {
+    list: [Node]!,
+    totalCount: Int,
+    pageSize: Int,
+    totalPageCount: Int,
+    pageOffset: Int,
+    pageIndex: Int,
+    hasNext: Boolean,
+    hasPrev: Boolean
+}
+
+type BatchPayLoad {
+    count : Int
+    list : [Node]!
+}
+
+type Query {
+    findList(where : Json, orderBy : String = "", limit : Int = 10, skip : Int = 0, includeInactive : Boolean = false) : [Node]!
+    findPage(where : Json, orderBy : String = "", limit : Int = 10, skip : Int = 0, includeInactive : Boolean = false) : Pagination
+    findOne(id: ID) : Node
+}
+
+type Mutation {
+    createOne(data : Json) : Node!
+    updateOne(data : Json) : Node!
+    activeOne(id: ID ) : Node!
+    deActiveOne(id: ID ) : Node!
+    deleteOne(id: ID) : Node
+    #    updateMany(data : Json, where : Json ) : BatchPayLoad
+    #    deleteMany(where : Json) : BatchPayLoad
+}
